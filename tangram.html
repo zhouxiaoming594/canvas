@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>tangram</title>
+<script>
+var tangram=[  
+            {p:[{x:0,y:0},{x:800,y:0},{x:400,y:400}],color:"yellow"},  
+            {p:[{x:0,y:0},{x:400,y:400},{x:0,y:800}],color:"pink"},  
+            {p:[{x:800,y:0},{x:800,y:400},{x:600,y:600},{x:600,y:200}],color:"purple"},  
+            {p:[{x:600,y:200},{x:600,y:600},{x:400,y:400}],color:"blue"},  
+            {p:[{x:400,y:400},{x:600,y:600},{x:400,y:800},{x:200,y:600}],color:"red"},  
+            {p:[{x:200,y:600},{x:400,y:800},{x:0,y:800}],color:"green"},  
+            {p:[{x:400,y:800},{x:800,y:400},{x:800,y:800}],color:"lightblue"}  
+            ];  
+function draw(c,shape)
+{
+	c.beginPath();
+	c.moveTo(shape.p[0].x,shape.p[0].y);
+	for (var i=1;i<shape.p.length;i++)
+		c.lineTo(shape.p[i].x,shape.p[i].y);
+	c.closePath();
+	c.fillStyle=shape.color;
+	c.fill();
+	c.stroke();
+	c.strokeStyle="#000";		
+}
+window.onload=function(){
+	var canvas=document.getElementById("canvas");
+	var context=canvas.getContext("2d");
+	canvas.width=800;
+	canvas.height=800;
+	for (var i=0;i<tangram.length;i++)
+		draw(context,tangram[i]);	
+}
+</script>
+</head>
+<canvas id="canvas" style="border:1px solid #000; display:block; margin:auto;">
+</canvas>
+<body>
+</body>
+</html>
