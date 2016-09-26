@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>太极图</title>
+<script>
+window.onload=function(){
+	var canvas=document.getElementById('canvas');
+	var context=canvas.getContext("2d");
+	canvas.width=400;
+	canvas.height=400;
+	//画白色半圆
+	context.beginPath();
+	context.arc(200,200,190,Math.PI*1.5,Math.PI*0.5);
+	context.closePath();
+	context.fillStyle="#fff";
+	context.fill();
+	
+	//画黑色半圆
+	context.beginPath();
+	context.arc(200,200,190,Math.PI*1.5,Math.PI*0.5,true);
+	context.closePath();
+	context.fillStyle="#000";
+	context.fill();
+	
+	//画白色小半圆
+	context.beginPath();
+	context.arc(200,105,95,Math.PI*1.5,Math.PI*0.5,true);
+	context.closePath();
+	context.fillStyle="#fff";
+	context.fill();
+	
+	//画黑色小半圆
+	context.beginPath();
+	context.arc(200,295,95,Math.PI*1.5,Math.PI*0.5);
+	context.closePath();
+	context.fillStyle="#000";
+	context.fill();
+	
+	//画黑色小圆点
+	context.beginPath();
+	context.arc(200,105,20,0,Math.PI*2);
+	context.closePath();
+	context.fillStyle="#000";
+	context.fill();
+	
+	//画白色小圆点
+	context.beginPath();
+	context.arc(200,295,20,0,Math.PI*2);
+	context.closePath();
+	context.fillStyle="#fff";
+	context.fill();
+}
+</script>
+</head>
+<body>
+<h1 style="text-align:center">Tai Chi</h1>
+<canvas id="canvas" style="border:1px solid #000; display:block; margin:auto; background:#CCCCCC;">
+	当前浏览器不支持Canvas，请更换浏览器后再试
+</canvas>
+</body>
+</html>
