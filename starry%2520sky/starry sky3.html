@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>starry sky2</title>
+</head>
+<body>
+<canvas id="canvas" style=" border:1px solid #000; display:block; margin:auto;">
+</canvas>
+<script type="text/javascript">
+window.onload=function(){
+	var canvas=document.getElementById("canvas");
+	var context=canvas.getContext("2d");
+	
+	canvas.width=1200;
+	canvas.height=800;
+	
+	//var skyStyle=context.createLinearGradient(0,0,0,canvas.height);
+	var skyStyle=context.createRadialGradient(canvas.width/2,canvas.height,0,canvas.width/2,canvas.height,canvas.height);//径向渐变设置背景颜色
+	skyStyle.addColorStop(0.0,'#035');
+	skyStyle.addColorStop(1.0,'black');
+	context.fillStyle=skyStyle;
+	context.fillRect(0,0,canvas.width,canvas.height);
+	
+	for(var i=0;i<100;i++){
+		var R=Math.random()*20+5;
+		var x=Math.random()*canvas.width;
+		var y=Math.random()*canvas.height*0.7;
+		var rot=Math.random()*360;
+		drawstar(context,R,x,y,rot);
+	}
+	drawMoon(context,canvas.width*0.8,canvas.height*0.2,100,30,1,'#FFCC33');//调用绘制月亮函数
+	drawland(context);//调用绘制草地函数
+		
+function drawstar(cxt,R,x,y,rot){
+	cxt.save();//使用save和restore接口指令保存状态
+	//图形变换效果使五角星平移，旋转，放大
+	cxt.translate(x,y);
+	cxt.rotate(rot/180*Math.PI);
+	cxt.scale(R,R);
+	//调用函数绘制五角星路径
+	starpath(cxt);
+	cxt.fillStyle="#ffff00";
+	cxt.fill();
+	
+	cxt.restore();
+}
+
+function starpath(cxt){
+	cxt.beginPath();
+	for(var i=0;i<5;i++){
+		cxt.lineTo(Math.cos((18+i*72)/180*Math.PI),-Math.sin((18+i*72)/180*Math.PI));//外圆点坐标
+		cxt.lineTo(Math.cos((54+i*72)/180*Math.PI)*0.5,-Math.sin((54+i*72)/180*Math.PI)*0.5);//内圆点坐标
+	}
+	cxt.closePath();
+}
+
+function drawMoon(cxt,x,y,R,rot,d,moonColor){
+	cxt.save();
+	cxt.translate(x,y);
+	cxt.rotate(rot/180*Math.PI);
+	cxt.scale(R,R);
+	moonPath(cxt,d);
+	
+	cxt.fillStyle=moonColor||"#FFFF00";//使用传入月亮颜色参数，不然使用默认颜色参数
+	cxt.fill();
+	cxt.restore();
+}
+//绘制单位圆内的月亮
+function moonPath(cxt,d){
+	cxt.beginPath();
+	cxt.arc(0,0,1,Math.PI/2,Math.PI*1.5,true);
+	cxt.moveTo(0,-1);
+	cxt.arcTo(d,0,0,1,dis(d,0,0,1)/d);
+	cxt.closePath();
+}
+//计算arcto函数半径参数
+function dis(x1,y1,x2,y2){
+	return Math.sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
+}
+//绘制草地
+function drawland(cxt){
+	cxt.save();
+	cxt.beginPath();
+	cxt.moveTo(0,600);
+	cxt.bezierCurveTo(200, 100, 200, 800, 1200, 700);//使用三次贝塞尔曲线绘制波浪曲线
+	cxt.lineTo(1200,800);
+	cxt.lineTo(0,800);
+	cxt.closePath();
+	var landStyle=cxt.createLinearGradient(0,400,0,800);//线性渐变设置草地颜色
+	landStyle.addColorStop(0.0,'#003300');
+	landStyle.addColorStop(1.0,'#006600');
+	cxt.fillStyle=landStyle;
+	cxt.fill();
+	cxt.restore();
+}
+
+}
+</script>
+</body>
+</html>
