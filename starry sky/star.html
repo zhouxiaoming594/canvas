@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>draw a star</title>
+</head>
+<body>
+<canvas id="canvas" style=" border:1px solid #000; display:block; margin:auto; background-color:#000066;">
+</canvas>
+<script type="text/javascript">
+window.onload=function(){
+	var canvas=document.getElementById("canvas");
+	var context=canvas.getContext("2d");
+	
+	canvas.width=800;
+	canvas.height=800;
+	drawstar(context,100,50,400,400,36);
+	
+//cxt=context，R=五角星外圆半径，r=五角星内圆半径，x，y=五角星基坐标平移，rot=五角星顺时针旋转角度
+function drawstar(cxt,R,r,x,y,rot){
+	cxt.lineWidth=10;
+	cxt.beginPath();
+	for(i=0;i<5;i++){
+		cxt.lineTo(Math.cos((18+i*72-rot)/180*Math.PI)*R+x,-Math.sin((18+i*72-rot)/180*Math.PI)*R+y);//外圆点坐标
+		cxt.lineTo(Math.cos((54+i*72-rot)/180*Math.PI)*r+x,-Math.sin((54+i*72-rot)/180*Math.PI)*r+y);//内圆点坐标
+	}
+	cxt.closePath();
+	
+	cxt.strokeStyle="#FFff66";
+	cxt.fillStyle="#ffff00";
+	
+	cxt.fill();
+	cxt.stroke();
+}
+}
+</script>
+</body>
+</html>
