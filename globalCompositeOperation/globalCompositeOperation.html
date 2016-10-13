@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>globalCompositeOperation</title>
+<style type="text/css">
+#button{
+	width:800px;
+	margin:0 auto;
+}
+#button a{
+	display:inline-block;
+	background:#eee;
+	width:100px;
+	height:40px;
+	text-decoration:none;
+	border:1px solid #000;
+	font-size:12px;
+	line-height:40px;
+	text-align:center;
+	color:#000;
+	margin:10px 5px;
+}
+#button a:active{
+	color:#f00;
+}
+#describe{
+	display:block;
+	position:fixed;
+	margin:auto;left:0; right:0; top:20px;
+	height:200px;
+}
+#describe h1{
+	margin:0;
+	padding-left:180px;
+	font-size:28px;
+}
+#describe p{
+	margin:0;
+	text-align:center;
+	font-size:40px;
+	color:#FF00FF;
+}
+</style>
+</head>
+<body>
+<canvas id="canvas" style=" display:block; margin:0 auto; border:1px solid #333;"></canvas>
+<div id="button">
+	<a href="#">source-over</a>
+	<a href="#">source-atop</a>
+	<a href="#">source-in</a>
+	<a href="#">source-out</a>
+	<a href="#">destination-over</a>
+	<a href="#">destination-atop</a>
+	<a href="#">destination-in</a>
+	<a href="#">destination-out</a>
+	<a href="#">lighter</a>
+	<a href="#">copy</a>
+	<a href="#">xor</a>
+</div>
+<div id="describe">
+	<h1>globalCompositeOperation:</h1>
+	<p>source-over</p>
+</div>
+<script type="text/javascript">
+window.onload=function(){
+	var canvas=document.getElementById("canvas");
+	var context=canvas.getContext("2d");
+	
+	canvas.width="800";
+	canvas.height="400";
+	
+	draw(context,'source-over');
+	
+	var texts=document.getElementById("describe").getElementsByTagName("p")[0];
+	var buttons=document.getElementById("button").getElementsByTagName("a");
+	for (var i=0;i<buttons.length;i++){
+		buttons[i].onclick=function(){
+			draw(context,this.text);
+			texts.innerHTML=this.text;
+			return false;
+		}
+	}
+function draw(cxt,composite){
+	cxt.save();
+	//清除画布
+	cxt.clearRect(0,0,canvas.width,canvas.height);
+	
+	//画一个矩形
+	cxt.fillStyle="blue";
+	cxt.fillRect(300,100,200,200);
+	
+	//画一个三角形
+	cxt.globalCompositeOperation=composite;
+	cxt.beginPath();
+	cxt.moveTo(470,180);
+	cxt.lineTo(570,330);
+	cxt.lineTo(370,330);
+	cxt.closePath();
+	
+	cxt.fillStyle="red";
+	cxt.fill();
+	
+	cxt.restore();
+}
+
+}
+</script>
+</body>
+</html>
