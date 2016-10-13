@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>彩色小球</title>
+</head>
+<body>
+<canvas id="canvas" style=" display:block; margin:auto; border:1px solid #eee;" ></canvas>
+<script type="text/javascript">
+var balls=[];
+window.onload=function(){
+	var canvas=document.getElementById("canvas");
+	var context=canvas.getContext("2d");
+	
+	canvas.width=800;
+	canvas.height=600;
+	
+	for(var i=0; i<100; i++){
+		var R=Math.floor(Math.random()*255);
+		var G=Math.floor(Math.random()*255);
+		var B=Math.floor(Math.random()*255);
+		var r=Math.random()*50+10;
+		var aBall={
+				color:"rgb("+R+","+G+","+B+")",
+				radius:r,
+				X:Math.random()*(canvas.width-2*r)+r,
+				Y:Math.random()*(canvas.height-2*r)+r,
+				vx:(Math.random()*5+5)*Math.pow(-1,Math.floor(Math.random()*1000)),
+				vy:(Math.random()*5+5)*Math.pow(-1,Math.floor(Math.random()*1000))
+		}
+		balls.push(aBall);
+	}
+	setInterval(function(){
+		drawBalls(context);
+		update();
+	},50);
+	
+function drawBalls(cxt,alpha,composite){
+	cxt.clearRect(0,0,canvas.width,canvas.height);
+	cxt.globalAlpha=alpha||"1";
+	cxt.globalCompositeOperation=composite||"xor";
+	for(var i=0;i<balls.length;i++){
+		
+		cxt.beginPath();
+		cxt.arc(balls[i].X,balls[i].Y,balls[i].radius,0,Math.PI*2);
+		cxt.closePath();
+	
+		cxt.fillStyle=balls[i].color;
+		cxt.fill();
+	}
+}
+
+function update(){
+	for(var i=0;i<balls.length;i++){
+		if(balls[i].X-balls[i].radius<0 || balls[i].X+balls[i].radius>canvas.width){
+			balls[i].vx=-balls[i].vx;
+		}
+		
+		if(balls[i].Y-balls[i].radius<0 || balls[i].Y+balls[i].radius>canvas.height){
+			balls[i].vy=-balls[i].vy;
+		}
+		balls[i].X+=balls[i].vx;
+		balls[i].Y+=balls[i].vy;
+	}
+}
+}	
+</script>
+</body>
+</html>
